@@ -1,24 +1,36 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { Box } from './Box';
 
 function App() {
+
+  const [boxes, setBoxes] = React.useState([
+    [[0,0, false], [0,1, false], [0,2, false]],
+    [[1,0, false], [1,1, false], [1,2, false]],
+    [[2,0, false], [2,1, false], [2,2, false]],
+  ]);
+
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      {
+        boxes.map(row => {
+          return (
+            <div>
+              {row.map(col => {
+                if(col[0] == 1 && (col[1] == 1 || col[1] == 2)) return <Box hidden={true} isGreen={col[2]} coordinate={[col[0], col[1]]} />
+                return <Box coordinate={[col[0], col[1]]} isGreen={col[2]} setBox={setBoxes} box={boxes}/>
+              })}
+              <br />
+            </div>
+            
+          )
+        })
+      }
+      
     </div>
   );
 }
